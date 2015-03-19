@@ -1,3 +1,11 @@
+if has("win32")
+    let $VIMFILES = $VIM.'/vimfiles'
+    let $V = $VIM.'/_vimrc'
+else
+    let $VIMFILES = $HOME.'/.vim'
+    let $V = $HOME.'/.vimrc'
+endif
+
 if has("unix")
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
@@ -5,6 +13,7 @@ else
     set rtp+=~/vimfiles/bundle/vundle/
     call vundle#rc('$HOME/vimfiles/bundle/')
 endif
+
 Bundle 'gmarik/vundle'
 Bundle 'plasticboy/vim-markdown'
 "Bundle 'AutoComplPop' "removed this for YouCompleteMe
@@ -34,6 +43,8 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Lokaltog/vim-easymotion'
 " 树型Undo记录
 Bundle 'vim-scripts/Gundo'
+" 模糊文件查找
+Bundle 'kien/ctrlp.vim'
 
 
 " 关闭自动备份
@@ -246,6 +257,8 @@ map <C-S-Tab> :MBEbp<cr>
 set sessionoptions="blank,buffers,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
 " 保存 undo 历史
 set undofile
+set undodir=$VIMFILES/\_undofiles
+set undolevels=1000
 " 保存快捷键
 map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
 " 恢复快捷键
