@@ -17,9 +17,9 @@ endif
 Bundle 'gmarik/vundle'
 Bundle 'plasticboy/vim-markdown'
 "Bundle 'AutoComplPop' "removed this for YouCompleteMe
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'Valloric/ListToggle'
-"Bundle 'scrooloose/syntastic'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 "Colorscheme
 Bundle 'tomasr/molokai'
 Bundle 'altercation/vim-colors-solarized'
@@ -45,6 +45,8 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/Gundo'
 " 模糊文件查找
 Bundle 'kien/ctrlp.vim'
+" Multiple Cursors
+Bundle 'terryma/vim-multiple-cursors'
 
 
 " 关闭自动备份
@@ -63,7 +65,7 @@ vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
 " 定义快捷键关闭当前分割窗口
-nmap <Leader>q :q<CR>
+"nmap <Leader>q :q<CR> "this keybind is conflict with YouCompleteMe
 " 定义快捷键保存当前窗口内容
 nmap <Leader>w :w<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
