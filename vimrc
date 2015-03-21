@@ -99,9 +99,9 @@ set wildmenu
 " 去掉输入错误提示音
 set noeb
 " 允许鼠标定位
-set mouse=a
-set selection=exclusive
-set selectmode=mouse,key
+"set mouse=a
+"set selection=exclusive
+"set selectmode=mouse,key
 " 使退格键正常处理indent,eol,start等
 set backspace=2
 
@@ -275,6 +275,7 @@ set sessionoptions="blank,buffers,globals,localoptions,tabpages,sesdir,folds,hel
 set undofile
 set undodir=$VIMFILES/\_undofiles
 set undolevels=1000
+
 " 保存快捷键
 map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
 " 恢复快捷键
