@@ -50,7 +50,20 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'terryma/vim-multiple-cursors'
 " 自动去掉行尾空格
 Bundle 'dongweiming/vary.vim'
+" Text-objs 系列扩展魔法的施法前件
+"Bundle 'coderifous/textobj-word-column.vim' 
+"This plugins provides text-objs of 'c'( col based on word) and 'C' (col based on WORD)
+"Bundle 'vim-indent-object' 
+"This plugin provides text-objs of 'i'(Indentation level and lines above/below.) and 'l'( Indentation level and lines above/below.)
+"Bundle 'argtextobj.vim'
+"This plugin provides a text-object 'a' (argument).
+" What this script does is more than just typing F,dt, because it recognizes inclusion relationship of parentheses.
 
+" Here follows motions
+"Bundle 'kana/vim-smartword'
+" http://www.vim.org/">welcome home : vim online; 
+"  # #   # #   #  #  ##  ##  #  #  ##  ##  # #  vim orginally moves like this;
+"  # #     #      #   #   #     #   #   #    #  with smartword vim moves like;
 
 " 关闭自动备份
 set nobackup
@@ -319,96 +332,96 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:EclimCompletionMethod = 'omnifunc'
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"新建.c,.h,.sh,.java文件，自动插入文件头
+""新建.c,.h,.sh,.java文件，自动插入文件头
 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()"
+"autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()"
 
-""定义函数SetTitle，自动插入文件头
+"""定义函数SetTitle，自动插入文件头
 
-func SetTitle()
+"func SetTitle()
 
-    "如果文件类型为.sh文件
+"    "如果文件类型为.sh文件
 
-    if &filetype == ‘sh‘
+"    if &filetype == ‘sh‘
 
-        call setline(1,"\#########################################################################")
+"        call setline(1,"\#########################################################################")
 
-        call append(line("."), "\# File Name: ".expand("%"))
+"        call append(line("."), "\# File Name: ".expand("%"))
 
-        call append(line(".")+1, "\# Author: YourName")
+"        call append(line(".")+1, "\# Author: YourName")
 
-        call append(line(".")+2, "\# mail: YourEmail")
+"        call append(line(".")+2, "\# mail: YourEmail")
 
-        "call append(line(".")+3, "\# Created Time: ".strftime("%c"))
-        call append(line(".")+3, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+"        "call append(line(".")+3, "\# Created Time: ".strftime("%c"))
+"        call append(line(".")+3, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
 
-        call append(line(".")+4, "\#########################################################################")
+"        call append(line(".")+4, "\#########################################################################")
 
-        call append(line(".")+5, "\#!/bin/bash")
+"        call append(line(".")+5, "\#!/bin/bash")
 
-        call append(line(".")+6, "")
+"        call append(line(".")+6, "")
 
-    else
+"    else
 
-        call setline(1, "/*************************************************************************")
+"        call setline(1, "/*************************************************************************")
 
-        call append(line("."), "    > File Name: ".expand("%"))
+"        call append(line("."), "    > File Name: ".expand("%"))
 
-        call append(line(".")+1, "    > Author: Gentlegaga")
+"        call append(line(".")+1, "    > Author: Gentlegaga")
 
-        call append(line(".")+2, "    > Mail: speedtog@qq.com")
+"        call append(line(".")+2, "    > Mail: speedtog@qq.com")
 
-        " 同样的 改变时间格式
-        "call append(line(".")+3, "    > Created Time: ".strftime("%c"))
-        call append(line(".")+3, "    > Created Time: ".strftime("%Y-%m-%d",localtime()))
+"        " 同样的 改变时间格式
+"        "call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+"        call append(line(".")+3, "    > Created Time: ".strftime("%Y-%m-%d",localtime()))
 
-        call append(line(".")+4, " ************************************************************************/")
+"        call append(line(".")+4, " ************************************************************************/")
 
-        call append(line(".")+5, "")
+"        call append(line(".")+5, "")
 
-    endif
+"    endif
 
-    if &filetype == ‘cpp‘
+"    if &filetype == ‘cpp‘
 
-        call append(line(".")+6, "#include<iostream>")
+"        call append(line(".")+6, "#include<iostream>")
 
-        call append(line(".")+7, "using namespace std;")
+"        call append(line(".")+7, "using namespace std;")
 
-        call append(line(".")+8, "")
+"        call append(line(".")+8, "")
 
-    endif
+"    endif
 
-    if &filetype == ‘c‘
+"    if &filetype == ‘c‘
 
-        call append(line(".")+6, "#include<stdio.h>")
+"        call append(line(".")+6, "#include<stdio.h>")
 
-        call append(line(".")+7, "")
+"        call append(line(".")+7, "")
 
-    endif
+"    endif
 
-    "新建文件后，自动定位到文件末尾
+"    "新建文件后，自动定位到文件末尾
 
-    autocmd BufNewFile * normal G
+"    autocmd BufNewFile * normal G
 
-endfunc
+"endfunc
 
-" Suzzz：  模仿上面，新建python文件时，添加文件头
+"" Suzzz：  模仿上面，新建python文件时，添加文件头
 
-autocmd BufNewFile *py exec ":call SetPythonTitle()"
+"autocmd BufNewFile *py exec ":call SetPythonTitle()"
 
-func SetPythonTitle()
-    call setline(1,"#!/usr/bin/env python")
-    call append( line("."),"#-*- coding: utf-8 -*-" )
-    call append(line(".")+1," ")
-    call append(line(".")+2, "\# File Name: ".expand("%"))
-    call append(line(".")+3, "\# Author: Gentlegaga")
-    call append(line(".")+4, "\# mail: speedtog@qq.com")
-    call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
-endfunc
+"func SetPythonTitle()
+"    call setline(1,"#!/usr/bin/env python")
+"    call append( line("."),"#-*- coding: utf-8 -*-" )
+"    call append(line(".")+1," ")
+"    call append(line(".")+2, "\# File Name: ".expand("%"))
+"    call append(line(".")+3, "\# Author: Gentlegaga")
+"    call append(line(".")+4, "\# mail: speedtog@qq.com")
+"    call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+"endfunc
 
 
 "C，C++ 按F5编译运行
