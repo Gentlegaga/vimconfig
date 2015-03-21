@@ -9,12 +9,13 @@ endif
 if has("unix")
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
-else 
+else
     set rtp+=~/vimfiles/bundle/vundle/
     call vundle#rc('$HOME/vimfiles/bundle/')
 endif
 
 Bundle 'gmarik/vundle'
+Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 "Bundle 'AutoComplPop' "removed this for YouCompleteMe
 Bundle 'Valloric/YouCompleteMe'
@@ -51,6 +52,7 @@ Bundle 'terryma/vim-multiple-cursors'
 
 " 关闭自动备份
 set nobackup
+set noswapfile
 " 开启文件类型侦测
 filetype on
 " 根据侦测到的不同类型加载对应的插件
@@ -94,6 +96,16 @@ set ignorecase
 set nocompatible
 " vim 自身命令行模式智能补全
 set wildmenu
+" 去掉输入错误提示音
+set noeb
+" 允许鼠标定位
+set mouse=a
+set selection=exclusive
+set selectmode=mouse,key
+" 使退格键正常处理indent,eol,start等
+set backspace=2
+
+
 
 
 " 配色方案
@@ -147,6 +159,8 @@ set tabstop=4
 set shiftwidth=4
 " 让 vim 把连续数量的空格视为一个制表符
 set softtabstop=4
+" 不要图形按钮
+set go=
 
 
 " 可视化关联缩进
@@ -269,3 +283,156 @@ map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
 
 " 调用 gundo 树
 nnoremap <Leader>ud :GundoToggle<CR>
+
+
+" YouCompleteMe Config
+" YCM 补全菜单配色
+" 菜单
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 引入 C++ 标准库tags
+set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"新建.c,.h,.sh,.java文件，自动插入文件头
+
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()"
+
+""定义函数SetTitle，自动插入文件头
+
+func SetTitle()
+
+    "如果文件类型为.sh文件
+
+    if &filetype == ‘sh‘
+
+        call setline(1,"\#########################################################################")
+
+        call append(line("."), "\# File Name: ".expand("%"))
+
+        call append(line(".")+1, "\# Author: YourName")
+
+        call append(line(".")+2, "\# mail: YourEmail")
+
+        "call append(line(".")+3, "\# Created Time: ".strftime("%c"))
+        call append(line(".")+3, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+
+        call append(line(".")+4, "\#########################################################################")
+
+        call append(line(".")+5, "\#!/bin/bash")
+
+        call append(line(".")+6, "")
+
+    else
+
+        call setline(1, "/*************************************************************************")
+
+        call append(line("."), "    > File Name: ".expand("%"))
+
+        call append(line(".")+1, "    > Author: Gentlegaga")
+
+        call append(line(".")+2, "    > Mail: speedtog@qq.com")
+
+        " 同样的 改变时间格式
+        "call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+        call append(line(".")+3, "    > Created Time: ".strftime("%Y-%m-%d",localtime()))
+
+        call append(line(".")+4, " ************************************************************************/")
+
+        call append(line(".")+5, "")
+
+    endif
+
+    if &filetype == ‘cpp‘
+
+        call append(line(".")+6, "#include<iostream>")
+
+        call append(line(".")+7, "using namespace std;")
+
+        call append(line(".")+8, "")
+
+    endif
+
+    if &filetype == ‘c‘
+
+        call append(line(".")+6, "#include<stdio.h>")
+
+        call append(line(".")+7, "")
+
+    endif
+
+    "新建文件后，自动定位到文件末尾
+
+    autocmd BufNewFile * normal G
+
+endfunc
+
+" Suzzz：  模仿上面，新建python文件时，添加文件头
+
+autocmd BufNewFile *py exec ":call SetPythonTitle()"
+
+func SetPythonTitle()
+    call setline(1,"#!/usr/bin/env python")
+    call append( line("."),"#-*- coding: utf-8 -*-" )
+    call append(line(".")+1," ")
+    call append(line(".")+2, "\# File Name: ".expand("%"))
+    call append(line(".")+3, "\# Author: Gentlegaga")
+    call append(line(".")+4, "\# mail: speedtog@qq.com")
+    call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+endfunc
+
+
+"C，C++ 按F5编译运行
+
+map <F5> :call CompileRunGcc()<CR>
+
+func! CompileRunGcc()
+
+    exec "w"
+
+    if &filetype == ‘c‘
+
+        exec "!g++ % -o %<"
+
+        exec "! ./%<"
+
+    elseif &filetype == ‘cpp‘
+
+        exec "!g++ % -o %<"
+
+        exec "! ./%<"
+
+    elseif &filetype == ‘java‘
+
+        exec "!javac %"
+
+        exec "!java %<"
+
+    elseif &filetype == ‘sh‘
+
+        :!./%
+
+    endif
+
+endfunc
