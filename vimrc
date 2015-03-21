@@ -48,6 +48,8 @@ Bundle 'vim-scripts/Gundo'
 Bundle 'kien/ctrlp.vim'
 " Multiple Cursors
 Bundle 'terryma/vim-multiple-cursors'
+" 自动去掉行尾空格
+Bundle 'dongweiming/vary.vim'
 
 
 " 关闭自动备份
@@ -106,6 +108,9 @@ set noeb
 set backspace=2
 
 
+" 自动去掉行尾空格的vary配置
+let g:auto_striptrail = "python,ruby"
+let g:auto_striptab = "python,ruby,cpp"
 
 
 " 配色方案
@@ -310,6 +315,8 @@ let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_cache_omnifunc=0
 " 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax=1
+" Using omnifunc for Java
+let g:EclimCompletionMethod = 'omnifunc'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
