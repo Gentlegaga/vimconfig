@@ -128,8 +128,8 @@ let g:auto_striptab = "python,ruby,cpp"
 
 " 配色方案
 set background=dark
-colorscheme solarized
-"colorscheme molokai
+"colorscheme solarized
+colorscheme molokai
 "colorscheme default
 
 " 禁止光标闪烁
